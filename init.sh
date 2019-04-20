@@ -26,4 +26,3 @@ sed -i "s/{db_prefix}/$db_prefix/g" docker-compose.yml
 
 #clean up
 rm -rf .git .gitignore init.sh docker-compose_template.yml
-
