@@ -1,0 +1,52 @@
+version: "3.5"
+
+services:
+#  nginx server
+  server:
+    image: nginx:latest
+    container_name: {project_prefix}_server
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./wordpress:/var/www/html
+    ports:
+      - {server_port}:80
+    networks:
+      - {project_prefix}_network
+
+#mariadb
+  db:
+    image: mariadb:latest
+    container_name: {project_prefix}_db
+    environment:
+      MYSQL_ROOT_PASSWORD: {db_password}
+    networks:
+      - {project_prefix}_network
+
+#phpmyadmin for database administration
+  dbadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: {project_prefix}_dbadmin
+    environment:
+      PMA_HOST: db
+    ports:
+      - {dbadmin_port}:80
+    networks:
+      - {project_prefix}_network
+
+#wordpress
+  wordpress:
+    image: wordpress:php7.3-fpm
+    container_name: {project_prefix}_wordpress
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_PASSWORD: {db_password}
+      WORDPRESS_DB_NAME: {db_name}
+      WORDPRESS_DB_PREFIX: {db_prefix}
+    volumes:
+      - ./wordpress:/var/www/html
+    networks:
+      - {project_prefix}_network
+
+networks:
+  {project_prefix}_network:
+    driver: bridge
