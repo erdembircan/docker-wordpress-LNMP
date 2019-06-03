@@ -19,6 +19,8 @@ services:
     container_name: {project_prefix}_db
     environment:
       MYSQL_ROOT_PASSWORD: {db_password}
+    volumes:
+      - {project_prefix}_db-volume:/var/lib/mysql
     networks:
       - {project_prefix}_network
 
@@ -46,6 +48,9 @@ services:
       - ./wordpress:/var/www/html
     networks:
       - {project_prefix}_network
+
+volumes:
+  {project_prefix}_db-volume:
 
 networks:
   {project_prefix}_network:
