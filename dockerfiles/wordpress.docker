@@ -1,0 +1,9 @@
+FROM "wordpress:php7.3-fpm"
+
+RUN docker-php-ext-install bcmath exif
+
+RUN apt-get update && apt-get install -y libmagickwand-dev --no-install-recommends
+
+RUN pecl install imagick
+
+RUN docker-php-ext-enable imagick
