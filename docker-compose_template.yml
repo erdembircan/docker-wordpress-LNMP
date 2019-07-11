@@ -37,9 +37,7 @@ services:
 
 #wordpress
   wordpress:
-    build:
-      context: dockerfiles
-      dockerfile: wordpress.docker
+    image: wordpress:fpm
     container_name: {project_prefix}_wordpress
     environment:
       WORDPRESS_DB_HOST: db
